@@ -1,0 +1,416 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link href="style.css" rel="stylesheet" />
+    <title>CS194-26 Project 2 - Eric Leong</title>
+</head>
+
+<body>
+    <div id="content">
+        <div id="inner">
+            <h1 class="title">CS194-26 Project 2 - Eric Leong</h1>
+            <div class="paragraph">
+                <h1>Part 1.1: Finite Difference Operator</h1>
+                <p>
+                    In this section, we will use the difference operators to generate 2 derivative images,
+                    and compute their gradient magnitude and finally apply a threshold to generate binary threshold
+                    numbers to form the resulting image.
+                </p>
+                <div class="row">
+                    <div class="imagecaption">
+                        <img src="./cameraman.png" alt="apple" height="225px" />
+                        <div class="caption">Cameraman</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="imagecaption">
+                        <img src="./res/cameraman_dx.jpg" alt="apple" height="225px" />
+                        <div class="caption">dx operator</div>
+                    </div>
+                    <div class="imagecaption">
+                        <img src="./res/cameraman_dy.jpg" alt="apple" height="225px" />
+                        <div class="caption">dy operator</div>
+                    </div>
+                    <div class="imagecaption">
+                        <img src="./res/cameraman_grad.jpg" alt="apple" height="225px" />
+                        <div class="caption">gradient magnitude</div>
+                    </div>
+                    <div class="imagecaption">
+                        <img src="./res/cameraman_nogauss.jpg" alt="apple" height="225px" />
+                        <div class="caption">applying threshold</div>
+                    </div>
+                </div>
+                <p>
+                    The difference operators, dx and dy, act as an approximation to corresponding partial derivatives,
+                    meaning
+                    that dx computes the rate of change on the x axis, dy computes the rate o f change on the y axis. We
+                    can interpret
+                    these with respect to the image by observing edges. For the dx operator, a vertical edge represents
+                    pixels with
+                    high dx, while for the dy operator, a horizontal edge has pixels with high dy values. We can utilize
+                    the difference operators
+                    as edge detectors, by computing the gradient magnitude, which involved finding the square root of
+                    the sum of dx**2 and dy**2.
+                    We could see from the resulting image that our edge detection is fairly noisey, detecting the
+                    background as edges.
+                </p>
+            </div>
+            <div class="paragraph">
+                <h1>Part 1.2: Derivative of Gaussian Picture</h1>
+                <p>
+                    In this section, we utilize a gaussian filter to remove most of the noise from the image since the
+                    gaussian filter acts as
+                    a low pass filter. We follow the same procedure as previous but we first start off by applying the
+                    gaussian filter on the original
+                    image. As we can see from the result, the filter removed much of the noise and allowed us to lower
+                    our threshold to make our
+                    edges around the cameraman more dense.
+                </p>
+                <div class="row">
+                    <div class="imagecaption">
+                        <img src="./res/camerman_gaussdxdy.jpg" alt="apple" height="225px" />
+                        <div class="caption">gaussian dx dy</div>
+                    </div>
+                </div>
+                <p>
+                    Utilizing the derivative theorem of convolution, which states that the derivative of a convolution
+                    is equivalent to the
+                    convolution of a derivative, we can make our process more efficient by computing the the derivative
+                    of the image first
+                    then applying the gaussian, which removes a step of computation.
+                </p>
+                <div class="row">
+                    <div class="imagecaption">
+                        <img src="./res/gaussdx.jpg" alt="apple" height="225px" />
+                        <div class="caption">derivative of gaussian x</div>
+                    </div>
+                    <div class="imagecaption">
+                        <img src="./res/gaussdy.jpg" alt="apple" height="225px" />
+                        <div class="caption">derivative of gaussian y</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="imagecaption">
+                        <img src="./res/camerman_dxgauss.jpg" alt="apple" height="225px" />
+                        <div class="caption">dx gaussian</div>
+                    </div>
+                    <div class="imagecaption">
+                        <img src="./res/camerman_dygauss.jpg" alt="apple" height="225px" />
+                        <div class="caption">dy gaussian</div>
+                    </div>
+                    <div class="imagecaption">
+                        <img src="./res/camerman_dxdygauss.jpg" alt="apple" height="225px" />
+                        <div class="caption">result</div>
+                    </div>
+                </div>
+                <p>
+                    As we can see, we still attain the exact same results as before.
+                </p>
+            </div>
+            <div class="paragraph">
+                <h1>Part 1.3: Image Straightening</h1>
+                <p>
+                    In this section, we again compute the derivatives of the gaussian and applying the gaussian filter
+                    on top of it.
+                    However, instead of computing the gradient magnitude, we compute the gradient angle which determines
+                    the orientation
+                    of each pixel. Using this information, we are able to determine the best degrees of rotation of our
+                    image that maximizes
+                    the number of vertical and horizontal edges. As we know, vertical edges correspond to 90, -90
+                    degrees while horizontal edges
+                    correspond to 180, 0, -180 degrees so we consider a edge as meeting our criteria if the pixel
+                    gradient angles fall within proximity
+                    of these degrees. In each of the follow examples, we display the original image, the image with the
+                    computed best rotation, and
+                    the histogram of gradient degrees for that best rotation.
+                </p>
+                <div class="row">
+                    <div class="imagecaption">
+                        <div class="caption">Facade Straightening</div>
+                        <img src="./res/facade_straighten.png" alt="apple" height="350px" />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="imagecaption">
+                        <div class="caption">Pisa Straightening</div>
+                        <img src="./res/pisa_straighten.png" alt="apple" height="350px" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="imagecaption">
+                        <div class="caption">Mcdonald's Straightening</div>
+                        <img src="./res/mcd_straighten.png" alt="apple" height="350px" />
+
+                    </div>
+                </div>
+                <h2>Failure case</h2>
+                <p>
+                    In this example, we could see that our original image is already oriented correctly
+                    by looking at the horizon. However, our algorithm still rotated our image ever so slightly,
+                    erroneously.
+                    This is likely because the image does not contain many horizontal or vertical edges that we can
+                    utilize as cues for determining the best rotation.
+                </p>
+                <div class="row">
+                    <div class="imagecaption">
+                        <div class="caption">Ocean Straightening</div>
+                        <img src="./res/ocean_straighten.png" alt="apple" height="350px" />
+
+                    </div>
+                </div>
+            </div>
+            <div class="paragraph">
+                <h1>Part 2.1: Image "Sharpening"</h1>
+                <p>
+                    In this section, we use the properties of high frequency pixels to seemingly "sharpen" images, by
+                    using an unsharp mask filter, which strengthens the high frequencies of an image.
+                </p>
+                <div class="row">
+                    <div class="imagecaption">
+                        <img src="./taj.jpg" alt="apple" height="250px" />
+                        <div class="caption">Taj</div>
+                    </div>
+                    <div class="imagecaption">
+                        <img src="./res/taj_sharpened.jpg" alt="apple" height="250px" />
+                        <div class="caption">Taj (sharpened)</div>
+                    </div>
+                </div>
+                <h2>Blurred to Sharpened</h2>
+                <p>
+                    Here, we start off with blurring an already sharp image using a gaussian filter then applying our
+                    sharpening filter on it. As we can see, the resulting image is less "sharp" than the initial
+                    image and looks like it might've even lost some critical detail. Once we removed the high frequency
+                    pixels by blurring the image, the sharpening filter is unable to bring it back and we lose some
+                    essential information about the image. The sharpening filter only acts to strengthen the remanining
+                    high frequency pixels that weren't removed.
+                </p>
+                <div class="row">
+                    <div class="imagecaption">
+                        <img src="./sharp.jpg" alt="apple" height="225px" />
+                        <div class="caption">Eagle</div>
+                    </div>
+                    <div class="imagecaption">
+                        <img src="./res/eagle_blurred.jpg" alt="apple" height="225px" />
+                        <div class="caption">Eagle (blurred)</div>
+                    </div>
+                    <div class="imagecaption">
+                        <img src="./res/eagle_sharpened.png" alt="apple" height="225px" />
+                        <div class="caption">Eagle (blurred -> sharpened)</div>
+                    </div>
+                </div>
+            </div>
+            <div class="paragraph">
+                <h1>Part 2.2: Hybrid Images</h1>
+                <p>
+                    In this section, we utilized both low and high frequencies to formulate images called hybrid images
+                    that appear to "morph" depending on how far away you view it. I formed 3 hybrid images, displaying
+                    the 2 original images and the resulting hybrid image. The image on the left is the image I used to
+                    form the low frequencies while the middle image is used for high frequencies. Therefore, we should
+                    only see characteristics of the high frequency image when we are viewing it closely. I
+                    additionally plotted the log magnitude of the fourier transform for the derek and nutmeg pictures.
+                </p>
+                <h2>Bells & Whistles</h2>
+                <p>
+                    For Bells & Whistles, I implemented all of my hybrid images with color. I felt that color added a
+                    lot of
+                    vibrancy to the images, and being able to see the color of the high frequency image improved the
+                    morphing
+                    effect of the resulting image.
+                </p>
+                <div class="row">
+                    <div>
+                        <h2>Derek and Nutmeg</h2>
+                        <img src="./DerekPicture.jpg" alt="apple" height="300px" />
+                        <img src="./nutmeg.jpg" alt="apple" height="300px" />
+                        <img src="./res/catman.jpg" alt="apple" height="300px" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <h3>Fourier Frequency Magnitude</h3>
+
+                        <img src="./res/images_fourier.png" alt="apple" height="250px" />
+                        <img src="./res/lowhighpass_fourier.png" alt="apple" height="250px" />
+                        <img src="./res/hybrid_fourier.png" alt="apple" height="250px" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <h2>Is DD Bread?</h2>
+
+                        <img src="./ddcat.jpg" alt="apple" height="250px" />
+                        <img src="./bread.jpg" alt="apple" height="250px" />
+                        <img src="./res/hybrid_dd.jpg" alt="apple" height="250px" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <h2>Failure Case: Kim Kardashitrump</h2>
+                        <p>
+                            In our final hybrid image, I used a picture of Trump and Kim K. As we
+                            can clearly see, the resulting hybrid image is slightly disturbing. Although
+                            the face aligned alright, everything else such as the body and hair did not align because of
+                            the mismatch
+                            between the 2 images. This was a very fun image pair to work with however.
+                        </p>
+                        <img src="./trump.jpg" alt="apple" height="300px" />
+                        <img src="./kim.jpg" alt="apple" height="300px" />
+                        <img src="./res/kardashitrump.jpg" alt="apple" height="300px" />
+                    </div>
+                </div>
+            </div>
+            <div class="paragraph">
+                <h1>Part 2.3: Gaussian and Laplacian Stacks</h1>
+                <p>
+                    In this section, we perform band pass filtering using Gaussian and Laplacian Stacks and display
+                    each of the frequency bands of the layers. We perform this on images with multiple resolution such as 
+                    the lincoln painting, mona lisa, and the hybrid image we generated. In each of the laplacian stacks, the last image
+                    is of the last layer of the gaussian stack.
+                </p>
+                <div class="imagecaption">
+                    <div class="caption">Lincoln Gaussian stack</div>
+                    <img src="./res/lincoln_gauss_stack.jpg" alt="apple" height="250px" />
+
+                </div>
+                <div class="imagecaption">
+                    <div class="caption">Lincoln Laplacian stack</div>
+                    <img src="./res/lincoln_laplace_stack.jpg" alt="apple" height="250px" />
+
+                </div>
+                <div class="imagecaption">
+                    <div class="caption">Mona Lisa Gaussian stack</div>
+                    <img src="./res/mona_gauss_stack.jpg" alt="apple" height="250px" />
+
+                </div>
+                <div class="imagecaption">
+                    <div class="caption">Mona Lisa Laplacian Stack</div>
+                    <img src="./res/mona_laplace_stack.jpg" alt="apple" height="250px" />
+
+                </div>
+                <div class="imagecaption">
+                    <div class="caption">Is DD Bread? Gaussian Stack</div>
+                    <img src="./res/dd_gauss_stack.jpg" alt="apple" height="150px" />
+
+                </div>
+                <div class="imagecaption">
+                    <div class="caption">Is DD Bread? Laplacian Stack</div>
+                    <img src="./res/dd_laplace_stack.jpg" alt="apple" height="150px" />
+
+                </div>
+            </div>
+            <div class="paragraph">
+                <h1>Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h1>
+                <p>
+                    In this section, we utilize the laplacian and gaussian stack in order to seam together
+                    2 images with a mask, applying a gaussian filter on the mask to create a blurring effect
+                    in the resulting image. For bells & whistles, I incorporated color into each of the images
+                    to improve the result. In each example, we applied the mask onto image 1 and blended with image 2,
+                    so that the "black regions" of the mask are where parts of image 2 could be found, and similarly,
+                    image 1 was contained in white regions. We had 3 examples total,
+                    with the last one using an irregular mask, shaped like a bridge. For that image, we also displayed
+                    the
+                    gaussian and laplacian stacks for each of the masked image as well as the blended image.
+                </p>
+                <div class="captiongroup">
+                    <div class="caption left" style="margin:10px">
+                        <figure>
+                            <img src="./apple.jpeg" alt="apple" height="250px" width="250px" />
+                            <figcaption>image 1: apple</figcaption>
+                        </figure>
+                        <figure class="right">
+                            <img src="./res/mask.jpg" alt="apporange" height="250px" width="250px" />
+                            <figcaption>mask</figcaption>
+                        </figure>
+                    </div>
+                    <div class="caption right">
+                        <figure class="right">
+                            <img src="./orange.jpeg" alt="orange" height="250px" width="250px" />
+                            <figcaption>image 2: orange</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="./res/apporange.jpg" alt="apporange" height="250px" width="250px" />
+                            <figcaption>hybrid image</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <h2>Sun and Moon</h2>
+                <div class="captiongroup">
+                    <div class="caption left" style="margin:10px">
+                        <figure>
+                            <img src="./sun.jpg" alt="apple" height="250px" />
+                            <figcaption>image 1: sun</figcaption>
+                        </figure>
+                        <figure class="right">
+                            <img src="./res/sunmask.png" alt="apporange" height="250px" />
+                            <figcaption>mask</figcaption>
+                        </figure>
+                    </div>
+                    <div class="caption right">
+                        <figure class="right">
+                            <img src="./moon.jpg" alt="orange" height="250px" />
+                            <figcaption>image 2: moon</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="./res/sunmoon.jpg" alt="apporange" height="250px" />
+                            <figcaption>hybrid image</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <h2>Bridge Borealis</h2>
+                <div class="captiongroup">
+                    <div class="caption left" style="margin:10px">
+                        <figure>
+                            <img src="./borealis.jpg" alt="orange" height="250px" />
+                            <figcaption>image 1: aurora borealis</figcaption>
+                        </figure>
+                        <figure class="right">
+                            <img src="./bridgemask2.jpg" alt="apporange" height="250px" />
+                            <figcaption>mask</figcaption>
+                        </figure>
+                    </div>
+                    <div class="caption">
+                        <figure class="right">
+                            <img src="./bridge.jpg" alt="apple" height="250px" />
+                            <figcaption>image 2: bridge</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="./res/bridge_aurora2.jpg" alt="apporange" height="250px" />
+                            <figcaption>hybrid image</figcaption>
+                        </figure>
+                    </div>
+                </div>
+                <div class="captiongroup">
+                    </br>
+                    <div class="subtitle">
+                        <h3>Bridge Laplacian Stack</h3>
+                        <img src="./res/bridge_left_vertical.jpg" height="1300" class="pic" />
+                    </div>
+                    <div class="subtitle">
+                        <h3>Borealis Laplacian Stack</h3>
+                        <img src="./res/bridge_right_vertical.jpg" height="1300" class="pic" />
+                    </div>
+                    <div class="subtitle">
+                        <h3>Hybrid Laplacian Stack</h3>
+                        <img src="./res/bridge_stack_vertical.jpg" height="1300" class="pic" />
+                    </div>
+                </div>
+            </div>
+            <div class="paragraph">
+                <h1> Conclusion</h1>
+                <p>
+                    I thoroughly enjoyed each section of the project, but I would say the most fascinating and important section was 
+                    the one about image straightening, as I did not know that there were ways to measure the 
+                    straightness of an image. I also really enjoyed the hybrid image section just because
+                    it was really fun to display some creativity and memes.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

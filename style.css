@@ -1,0 +1,179 @@
+@charset "UTF-8";
+/* CSS Document */
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Helvetica Neue Std", Helvetica, sans-serif;
+}
+
+body {
+  background-color:#2F4F4F;
+  width: 98vw;
+}
+
+.title {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  padding-left: 50px;
+  padding-right: 30px;
+}
+
+#content {
+  width: 1250px;
+  margin-left: auto;
+  margin-right: auto;
+
+  padding: 0px;
+}
+
+#inner {
+  background-color: #fff;
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.paragraph {
+  font-size: 18px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.pic {
+  display: block;
+  padding: 7px;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 20px;
+}
+
+#triple {
+  padding-left: 20px;
+  padding-right: 50px;
+}
+
+#train {
+  display: block;
+  margin-left: 50px;
+  margin-right: 20px;
+}
+
+#begin {
+  overflow: auto;
+}
+
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#contrast {
+  display: block;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  overflow: auto;
+}
+
+.subtitle {
+  overflow: auto;
+  text-align: center;
+}
+
+.sub {
+  position: relative;
+  bottom: 10px;
+  font-style: italic;
+  font-size: 14px;
+}
+
+#noCrop {
+  margin-right: 20px;
+}
+
+.pad {
+  padding-bottom: 50;
+}
+
+.full {
+  margin-left: 40px;
+  font-size: 10;
+}
+
+#footer {
+  position: relative;
+  bottom: 20px;
+  text-align: center;
+  font-size: 12px;
+  padding: 5px 0px 10px 20px;
+  float: left;
+  clear: both;
+}
+
+#contact {
+  position: relative;
+  margin-left: 5px;
+  bottom: 15px;
+}
+
+figcaption {
+  text-align: center;
+}
+
+.image_title {
+  text-align: center;
+}
+.figure_container {
+  margin: 15px;
+}
+
+.captiongroup {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+.centergroup {
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  /* justify-content: center; */
+}
+.row {
+  display: flex;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  justify-content: center;
+}
+.row div {
+  text-align: center;
+}
+.imagecaption {
+  display: inline-block;
+  margin: 5px;
+}
+.caption {
+  margin-top: 5px;
+  text-align: center;
+}
+.column {
+  flex: 33.33%;
+  padding: 5px;
+}
